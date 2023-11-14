@@ -8,7 +8,7 @@ module.exports = {
         "prefer-const": ["warn"],
         quotes: ["warn", "double"],
         "comma-dangle": ["off"],
-        "multiline-ternary": ["off"]
+        "multiline-ternary": ["off"],
+        "no-extend-native": ["off"] // Turn off the no-extend-native rule
     }
 };
-

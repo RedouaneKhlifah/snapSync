@@ -6,8 +6,10 @@ import connectDB from "./config/db.js";
 // import utiles
 
 // imported routes
+import router from "./routes/index.js";
 
 // import middlwares
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 // env
 dotenv.config();
@@ -26,7 +28,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // use routes
+app.use("/", router);
 
 // use error Middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;
