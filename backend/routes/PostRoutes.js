@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { getAllPosts, CreatePost } from "../controllers/PostController.js";
+import { getAllPosts, CreatePost ,UpadetPost, DeletePost,LikePost} from "../controllers/PostController.js";
 
 const router = Router();
 
@@ -12,10 +12,29 @@ const router = Router();
 router.get("/", getAllPosts);
 
 /**
- * @GET
+ * @POST
  * @desc // create a new Post
  * @access POST
  */
 router.post("/", CreatePost);
 
+/**
+ * @PATCH
+ * @desc // update a Post
+ * @access PATCH
+ */
+router.patch("/:id",UpadetPost)
+/**
+ * @DELETE
+ * @desc //DELETE a Post
+ * @access DELETE
+ */
+router.delete("/:id",DeletePost)
+
+/**
+ * @PATCH
+ * @desc //LIKE a Post
+ * @access PATCH
+ */
+router.patch("/likes/:id",LikePost)
 export default router;

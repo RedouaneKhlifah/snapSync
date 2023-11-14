@@ -22,7 +22,6 @@ const CreatePost = asynchandler(async (req, res) => {
     validator(PostSchema, req.body);
 
     const { title, message, creator, image, tags } = req.body;
-    console.log(title);
     const post = await Post.create({ title, message, creator, image, tags });
     res.status(201).json(post);
 });
@@ -33,8 +32,35 @@ const CreatePost = asynchandler(async (req, res) => {
  * @access public
  */
 const UpadetPost = asynchandler(async (req, res) => {
-    validator(PostSchema, req.body);
+	const body=req.body;
+	const {id}=req.params;
+    validator(PostSchema, body);
+	const existPost = await Post.findById(id);
+	if(!existPost){
+		throw new Error('post not exist')
+	}
+	const post=await Post.findByIdAndUpdate(id,body,{new:true});
+	res.status(200).json(post);
+
 });
 
-const DeletePost = asynchandler(async (req, res) => {});
-export { getAllPosts, CreatePost, UpadetPost, DeletePost };
+const DeletePost = asynchandler(async (req, res) => {
+    const {id}=req.params;
+	const existPost=await Post.findById(id);
+	if(!existPost){
+		throw new Error('Post not exist')
+	}
+	const post=await Post.findByIdAndDelete(id);
+	res.status(200).json(post);
+});
+
+const LikePost = asynchandler(async(req,res)=>{
+    const {id}=req.params;
+    const existPost = await Post.findById(id);
+    if(!existPost){
+	throw new Error('Post not exist')
+}
+    const post = await Post.findByIdAndUpdate(id,{$inc:{like:1}},{new:true});
+	res.status(200).json(post);
+})
+export { getAllPosts, CreatePost, UpadetPost, DeletePost ,LikePost};

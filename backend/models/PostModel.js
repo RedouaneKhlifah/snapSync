@@ -17,6 +17,10 @@ const PostSchema = mongoose.Schema({
         type: String,
         required: [true, "please add a image"]
     },
+	like:{
+		type:Number,
+		default:0
+	},
     tags: [{ type: String, required: [true, "please add a tag"] }]
 });
 
