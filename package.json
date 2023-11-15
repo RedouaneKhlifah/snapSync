@@ -6,7 +6,9 @@
     "type": "module",
     "scripts": {
         "start": "node Backend/server.js",
-        "server": "nodemon Backend/server.js"
+        "server": "nodemon Backend/server.js",
+        "frontend": "cd frontend && npm run dev",
+        "both": "concurrently \"npm run server\" \"npm run frontend\""
     },
     "repository": {
         "type": "git",
@@ -21,6 +23,7 @@
         "express-async-handler": "^1.2.0",
         "joi": "^17.11.0",
         "mongoose": "^7.2.4",
+        "react-icons": "^4.12.0",
         "typescript": "^5.2.2"
     },
     "devDependencies": {
@@ -36,4 +39,3 @@
         "nodemon": "^2.0.22"
     }
 }
-
