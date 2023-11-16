@@ -19,15 +19,15 @@ const getAllPosts = asynchandler(async (req, res) => {
  */
 const CreatePost = asynchandler(async (req, res) => {
     validator(PostSchema, req.body);
-
     const { title, message, creator, image, tags } = req.body;
+	const tagsArray = tags.split(",");
+	console.log(tagsArray);
     const post = await Post.create({
         title,
         message,
         creator,
         image,
-        tags,
-        like
+        tagsArray,
     });
     res.status(201).json(post);
 });
