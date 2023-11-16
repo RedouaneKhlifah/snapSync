@@ -15,6 +15,7 @@ const CreatePost = (post) => {
     return async (dispatch) => {
         const response = await axios.post("/post",postData );
         dispatch({ type: actionTypes.CREATE_POST, payload: response.data });
+        
         dispatch(fetchPosts());
     };
 };

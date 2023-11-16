@@ -24,7 +24,9 @@ function Post({
                             <span className="text">title{creator}</span>
                             <div
                                 className=" cursor-pointer "
-                                onClick={() => updatefunc("655353b4cac0f8a67ecc51a3")}
+                                onClick={() =>
+                                    updatefunc("655353b4cac0f8a67ecc51a3")
+                                }
                             >
                                 <HiOutlineDotsHorizontal />
                             </div>

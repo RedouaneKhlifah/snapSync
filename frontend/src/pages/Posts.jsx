@@ -3,7 +3,11 @@ import Post from "../Components/Post";
 import imageTest from "../assets/img/test.png";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchPosts, CreatePost ,UpdatePost} from "../services/redux/actions/PostActions";
+import {
+    fetchPosts,
+    CreatePost,
+    UpdatePost
+} from "../services/redux/actions/PostActions";
 import Form from "../Components/Form";
 
 function Posts() {
@@ -17,16 +21,15 @@ function Posts() {
 
     const [FormType, SetFormType] = useState("create");
     function handelFormType(postId) {
-		const post = posts.find((post) => (post.postId = postId));
+        const post = posts.find((post) => (post.postId = postId));
         SetFormType("update");
-		setForm({
-         title:post.title,
-         message:post.message,
-         creator:post.creator,
-		 tags : post.tags.join(','),
-         image:"test"
-		})
-
+        setForm({
+            title: post.title,
+            message: post.message,
+            creator: post.creator,
+            tags: post.tags.join(","),
+            image: "test"
+        });
     }
 
     const [form, setForm] = useState({
@@ -45,7 +48,6 @@ function Posts() {
         }));
     }
 
-
     function handleSubmit() {
         dispatch(CreatePost(form));
         setForm({
@@ -56,17 +58,17 @@ function Posts() {
             tags: ""
         });
     }
-	function Update(){
-		dispatch(UpdatePost(form,"655353b4cac0f8a67ecc51a3"));
-		setForm({
+    function Update() {
+        dispatch(UpdatePost(form, "655353b4cac0f8a67ecc51a3"));
+        setForm({
             title: "",
             image: "test",
             creator: "",
             message: "",
             tags: ""
         });
-		SetFormType("create")
-	}
+        SetFormType("create");
+    }
     return (
         <div className=" m-4">
             <Header />
@@ -76,7 +78,7 @@ function Posts() {
                         {posts.map((post) => {
                             return (
                                 <Post
-                                    key={post.id}
+                                    key={post._id}
                                     title={post.title}
                                     image={imageTest}
                                     date="3 hours ago"
@@ -95,7 +97,9 @@ function Posts() {
                         <Form
                             type={FormType}
                             handelChange={handelChange}
-                            handleSubmit={FormType === "create" ? handleSubmit : Update}
+                            handleSubmit={
+                                FormType === "create" ? handleSubmit : Update
+                            }
                             formData={form}
                         />
                     </div>
