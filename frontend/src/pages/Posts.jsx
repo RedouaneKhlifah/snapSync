@@ -73,16 +73,21 @@ function Posts() {
             <div className=" grid xl:grid-cols-[60%_40%] lg:grid-cols-[60%_40%]  m-6 ">
                 <div className="xl:w-11/12 lg:w-11/12 md:w-12/12   ">
                     <div className=" grid  xl:grid-cols-2 lg:grid-cols-2  md:grid-cols-3 sm:grid-cols-2  gap-4 ">
-                        <Post
-                            title="title"
-                            image={imageTest}
-                            date="3 hours ago"
-                            creator="nabil"
-                            message="react"
-                            likeNumber={3}
-                            tag="react"
-                            updatefunc={handelFormType}
-                        />
+                        {posts.map((post) => {
+                            return (
+                                <Post
+                                    key={post.id}
+                                    title={post.title}
+                                    image={imageTest}
+                                    date="3 hours ago"
+                                    creator={post.creator}
+                                    message={post.message}
+                                    likeNumber={post.like}
+                                    tag={post.tags.join("")}
+                                    updatefunc={handelFormType}
+                                />
+                            );
+                        })}
                     </div>
                 </div>
                 <div className="  flex justify-center ">
