@@ -18,7 +18,7 @@ TextareaDf.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.func.isRequired
+    value: PropTypes.string.isRequired
 };
 
 export default TextareaDf;
