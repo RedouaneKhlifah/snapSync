@@ -30,7 +30,7 @@ function Form({ type, handelChange, handleSubmit, formData }) {
                     value={formData.message}
                 />
                 <InputDf
-                    label="tags"
+                     label="tags"
                     name="tags"
                     onChange={handelChange}
                     value={formData.tags}

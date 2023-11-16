@@ -18,5 +18,15 @@ const CreatePost = (post) => {
         dispatch(fetchPosts());
     };
 };
+const UpdatePost = (post,id) => {
+    const tags = post.tags.split(",");
+    const postData = { ...post, tags: tags };
+    return async (dispatch) => {
+        const response = await axios.patch(`/post/${id}`,postData );
+        dispatch({ type: actionTypes.UPDATE_POST, payload: response.data });
+		
+        dispatch(fetchPosts());
+    };
+};
 
-export { fetchPosts, CreatePost };
+export { fetchPosts, CreatePost,UpdatePost };
