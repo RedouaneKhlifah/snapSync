@@ -21,7 +21,14 @@ const CreatePost = asynchandler(async (req, res) => {
     validator(PostSchema, req.body);
 
     const { title, message, creator, image, tags } = req.body;
-    const post = await Post.create({ title, message, creator, image, tags });
+    const post = await Post.create({
+        title,
+        message,
+        creator,
+        image,
+        tags,
+        like
+    });
     res.status(201).json(post);
 });
 
