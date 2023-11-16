@@ -33,7 +33,7 @@ const PostSchema = Joi.object({
     message: Joi.string().required().messages(customErrorMessages),
     creator: Joi.string().required().messages(customErrorMessages),
     image: Joi.string().required().messages(customErrorMessages),
-    tags: Joi.array().required().messages(customErrorMessages)
+    tags: Joi.string().required().messages(customErrorMessages)
 });
 
 /**
