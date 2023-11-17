@@ -40,20 +40,7 @@ const create = asynchandler(async (data) => {
  */
 
 const update = asynchandler(async (id, data) => {
-    const { title, message, creator, image, tags } = data;
-    const tagsArray = tags.split(",");
-    console.log(tagsArray);
-    return await Post.findByIdAndUpdate(
-        id,
-        {
-            title,
-            message,
-            creator,
-            image,
-            tags: tagsArray
-        },
-        { new: true }
-    );
+    return await Post.findByIdAndUpdate(id, data, { new: true });
 });
 
 export { create, update };

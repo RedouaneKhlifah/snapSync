@@ -38,9 +38,14 @@ const CreatePost = asynchandler(async (req, res) => {
  * @returns {Promise<Document>} A Promise that resolves  documents representing post.
  */
 const UpadetPost = asynchandler(async (req, res) => {
-    const body = req.body;
+    validator(PostSchema, req.body);
+
+    const { tags } = req.body;
+    const tagsArray = tags.split(",");
+
+    const body = { ...req.body, tags: tagsArray };
     const { id } = req.params;
-    validator(PostSchema, body);
+
     await CheckRecord(Post, id);
     const post = await update(id, body);
     res.status(200).json(post);
@@ -57,7 +62,8 @@ const UpadetPost = asynchandler(async (req, res) => {
 const DeletePost = asynchandler(async (req, res) => {
     const { id } = req.params;
     await CheckRecord(Post, id);
-    const post = Post.findByIdAndDelete(id);
+    console.log(id);
+    const post = await Post.findByIdAndDelete(id);
     res.status(200).json(post);
 });
 
