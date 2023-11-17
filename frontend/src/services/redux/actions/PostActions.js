@@ -43,8 +43,25 @@ const DeletePost = (id) => {
     return async (dispatch) => {
         const response = await axios.delete(`/post/${id}`);
         dispatch({ type: actionTypes.DELETE_POST, payload: response.data });
+
         dispatch(fetchPosts());
     };
 };
+const LikePost=(id)=>{
+ return async(dispatch)=>{
+     const response = await axios.patch(`/post/likes/${id}`);
+	 dispatch({type:actionTypes.LIKE_POST,payload:response.data});
+	 dispatch(fetchPosts());
+ };
+};
+ const DeletePost=(id)=>{
+	return async(dispatch)=>{
+	const response = await axios.delete(`/post/${id}`);
+	dispatch({type:actionTypes.DELETE_POST,payload:response.data});
+	dispatch(fetchPosts());
+
+ };
+};
 
 export { fetchPosts, CreatePost, UpdatePost, LikePost, DeletePost };
+

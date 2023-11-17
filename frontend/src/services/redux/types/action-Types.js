@@ -4,4 +4,5 @@ export const actionTypes = {
     UPDATE_POST: "UPDATE_POST",
     LIKE_POST: "LIKE_POST",
     DELETE_POST: "DELETE_POST"
+
 };

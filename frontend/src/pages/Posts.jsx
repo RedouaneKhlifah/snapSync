@@ -9,6 +9,7 @@ import {
     LikePost,
     DeletePost
 } from "../services/redux/actions/PostActions";
+
 import Form from "../Components/Form";
 import { convertImageToBase64, emptyFileInpute } from "../utils/HelpesFunc";
 
@@ -71,6 +72,7 @@ function Posts() {
     function Update() {
         dispatch(UpdatePost(form, SelectedPostId));
         setForm({
+
             title: "",
             image: "",
             creator: "",
@@ -83,13 +85,15 @@ function Posts() {
 
     function ClearForm() {
         setForm({
+
             title: "",
             image: "",
             creator: "",
             message: "",
             tags: ""
         });
-        emptyFileInpute("imageInput");
+
+      emptyFileInpute("imageInput");
         SetFormType("create");
     }
 
@@ -100,6 +104,7 @@ function Posts() {
     function handleDelete(postId) {
         dispatch(DeletePost(postId));
     }
+
     return (
         <div className=" m-4">
             <Header />
@@ -121,6 +126,7 @@ function Posts() {
                                     updatefunc={handelFormType}
                                     like={likePost}
                                     handleDelete={handleDelete}
+
                                 />
                             );
                         })}

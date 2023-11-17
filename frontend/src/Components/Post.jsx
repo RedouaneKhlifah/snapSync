@@ -15,7 +15,9 @@ function Post({
     updatefunc,
     like,
     handleDelete
+
 }) {
+
     return (
         <div className="rounded-lg border overflow-hidden shadow-xl">
             <div className=" h-40 border-b-[1px] mb-4 overflow-hidden relative ">
@@ -92,6 +94,7 @@ Post.propTypes = {
     updatefunc: PropTypes.func.isRequired,
     like: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired
+
 };
 
 export default Post;

@@ -16,6 +16,7 @@ const PostsReducer = (state = intialState, { type, payload }) => {
             return { ...state, likePost: payload };
         case actionTypes.DELETE_POST:
             return { ...state, deletePost: payload };
+
         default:
             return state;
     }
