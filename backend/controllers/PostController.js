@@ -1,85 +1,84 @@
-import Post from "../models/PostModel.js";
 import asynchandler from "express-async-handler";
+import { create, update } from "../services/post.js";
 import { validator, PostSchema } from "../validator/JoiSchemas.js";
+import { CheckRecord } from "../services/helpers/helpers.js";
+import Post from "../models/PostModel.js";
 
 /**
- * Get all Posts
- * @route GET /post
+ * Retrieves all posts.
+ * @async
+ * @route {GET} /post
  * @access public
+ * @returns {Promise<Array<Document>>} A Promise that resolves to an array of documents representing all posts.
  */
 const getAllPosts = asynchandler(async (req, res) => {
-    const Posts = await Post.find();
-    res.json(Posts);
+    const posts = await Post.find();
+    res.json(posts);
 });
 
 /**
- * create new Post
- * @route POST /posts
+ * CREATE new post.
+ * @async
+ * @route {POST} /post
  * @access public
+ * @returns {Promise<Document>} A Promise that resolves to an array of documents representing all posts.
  */
 const CreatePost = asynchandler(async (req, res) => {
-    validator(PostSchema, req.body);
-    const { title, message, creator, image, tags } = req.body;
-	const tagsArray = tags.split(",");
-	console.log(tagsArray);
-    const post = await Post.create({
-        title,
-        message,
-        creator,
-        image,
-        tagsArray,
-    });
+    const body = req.body;
+    validator(PostSchema, body);
+    const post = await create(body);
     res.status(201).json(post);
 });
 
 /**
- * update Post
- * @route PATCH /posts
+ * Update new post.
+ * @async
+ * @route {PATCH} /post/id
  * @access public
+ * @returns {Promise<Document>} A Promise that resolves  documents representing post.
  */
 const UpadetPost = asynchandler(async (req, res) => {
-    const body = req.body;
+    validator(PostSchema, req.body);
+
+    const { tags } = req.body;
+    const tagsArray = tags.split(",");
+
+    const body = { ...req.body, tags: tagsArray };
     const { id } = req.params;
-    validator(PostSchema, body);
-    const existPost = await Post.findById(id);
-    if (!existPost) {
-        throw new Error("post not exist");
-    }
-    const post = await Post.findByIdAndUpdate(id, body, { new: true });
+
+    await CheckRecord(Post, id);
+    const post = await update(id, body);
     res.status(200).json(post);
 });
 
 /**
- * delete Post
- * @route DELETE /posts
+ * Update new post.
+ * @async
+ * @route {DELETE} /post/id
  * @access public
+ * @returns {Promise<Document>} A Promise that resolves to an array of documents representing all post.
  */
+
 const DeletePost = asynchandler(async (req, res) => {
     const { id } = req.params;
-    const existPost = await Post.findById(id);
-    if (!existPost) {
-        throw new Error("Post not exist");
-    }
+    await CheckRecord(Post, id);
+    console.log(id);
     const post = await Post.findByIdAndDelete(id);
     res.status(200).json(post);
 });
 
 /**
- * like Post
- * @route PATCH /posts/like
+ * incerement the like value by 1
+ * @async
+ * @route {PATCH} /post/likes/id
  * @access public
+ * @returns {Promise<Document>} A Promise that resolves todocuments representing all post.
  */
 const LikePost = asynchandler(async (req, res) => {
     const { id } = req.params;
-    const existPost = await Post.findById(id);
-    if (!existPost) {
-        throw new Error("Post not exist");
-    }
-    const post = await Post.findByIdAndUpdate(
-        id,
-        { $inc: { like: 1 } },
-        { new: true }
-    );
+    const data = { $inc: { like: 1 } };
+    const post = await update(id, data);
     res.status(200).json(post);
 });
+
 export { getAllPosts, CreatePost, UpadetPost, DeletePost, LikePost };

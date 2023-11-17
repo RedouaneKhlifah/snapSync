@@ -9,13 +9,14 @@ const PostsReducer = (state = intialState, { type, payload }) => {
             return { ...state, posts: payload };
 
         case actionTypes.CREATE_POST:
-            return{...state,newPost:payload}
+            return { ...state, newPost: payload };
         case actionTypes.UPDATE_POST:
-			return {...state,updatedPost:payload}
-		case actionTypes.LIKE_POST:
-			return {...state,likePost:payload}
-		case actionTypes.DELETE_POST:
-			return {...state,deletePost:payload}
+            return { ...state, updatedPost: payload };
+        case actionTypes.LIKE_POST:
+            return { ...state, likePost: payload };
+        case actionTypes.DELETE_POST:
+            return { ...state, deletePost: payload };
+
         default:
             return state;
     }

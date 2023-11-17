@@ -4,10 +4,10 @@ import TextareaDf from "./ui/TextareaDf";
 import Button from "./ui/Button";
 import PropTypes from "prop-types";
 
-function Form({ type, handelChange, handleSubmit, formData,ClearForm }) {
+function Form({ type, handelChange, handleSubmit, formData, ClearForm }) {
     return (
-        <div className="bg-white   ">
-            <div className="border-[1px] rounded-lg px-5 py-4 shadow-sm">
+        <div className="bg-white w-10/12 ">
+            <div className="border-[1px] rounded-lg px-5 py-4 shadow-xl">
                 <h1 className="text-center  text-base font-semibold">
                     {type === "create" ? "Creating a Memory" : "update "}
                 </h1>
@@ -36,7 +36,11 @@ function Form({ type, handelChange, handleSubmit, formData,ClearForm }) {
                         onChange={handelChange}
                         value={formData.tags}
                     />
-                    <InputFile placeholder="choose a file" name="image" />
+                    <InputFile
+                        placeholder="choose a file"
+                        name="image"
+                        onChange={handelChange}
+                    />
                     <Button
                         name="SUBMIT"
                         bgColor=" bg-gradient-to-l from-blue-500 to-blue-600 "
@@ -45,7 +49,7 @@ function Form({ type, handelChange, handleSubmit, formData,ClearForm }) {
                     <Button
                         name="CLEAR"
                         bgColor="  bg-gradient-to-l from-red-500 to-red-600 "
-						onSubmit={ClearForm}
+                        onSubmit={ClearForm}
                     />
                 </div>
             </div>
@@ -57,7 +61,7 @@ Form.propTypes = {
     type: PropTypes.string.isRequired,
     handelChange: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-	ClearForm:PropTypes.func.isRequired,
+    ClearForm: PropTypes.func.isRequired,
     formData: PropTypes.object
 };
 
