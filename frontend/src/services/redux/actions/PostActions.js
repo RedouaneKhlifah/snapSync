@@ -75,3 +75,4 @@ const DeletePost = (id) => {
 };
 
 export { fetchPosts, CreatePost, UpdatePost, LikePost, DeletePost };
+

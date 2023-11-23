@@ -87,6 +87,7 @@ function Posts() {
         e.preventDefault();
         dispatch(UpdatePost(form, SelectedPostId));
         setForm({
+
             title: "",
             image: "",
             creator: "",
@@ -99,13 +100,15 @@ function Posts() {
 
     function ClearForm() {
         setForm({
+
             title: "",
             image: "",
             creator: "",
             message: "",
             tags: ""
         });
-        emptyFileInpute("imageInput");
+
+      emptyFileInpute("imageInput");
         SetFormType("create");
     }
 
@@ -139,6 +142,7 @@ function Posts() {
                                     updatefunc={handleFormType}
                                     like={likePost}
                                     handleDelete={handleDelete}
+
                                 />
                             );
                         })}
