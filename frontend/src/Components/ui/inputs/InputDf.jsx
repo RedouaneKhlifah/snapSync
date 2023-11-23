@@ -1,24 +1,24 @@
-import { Textarea } from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 
-function TextareaDf({ label, name, onChange, value }) {
+function InputDf({ label, name, onChange, value }) {
     return (
-        <div className="w-full  ">
-            <Textarea
+        <div className="w-full border-[1px]  ">
+            <Input
+                onChange={onChange}
                 label={label}
                 name={name}
-                onChange={onChange}
                 value={value}
             />
         </div>
     );
 }
 
-TextareaDf.propTypes = {
+InputDf.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired
+    value: PropTypes.string
 };
 
-export default TextareaDf;
+export default InputDf;

@@ -7,7 +7,7 @@ import asynchandler from "express-async-handler";
  * @property {string} message - The content or message of the post.
  * @property {string} creator - The creator or author of the post.
  * @property {string} image - The image associated with the post.
- * @property {string[]} tags - An array of tags associated with the post.
+ * @property {string} tags - An array of tags associated with the post.
  */
 
 /**
@@ -17,30 +17,31 @@ import asynchandler from "express-async-handler";
  * @throws {Error} If there's an issue creating the post.
  * @returns {Promise<Document>} A Promise that resolves to the document representing the new post record.
  */
-const create = asynchandler(async (data) => {
-    const { title, message, creator, image, tags } = data;
+const createPost = asynchandler(async (body) => {
+    const { tags } = body;
     const tagsArray = tags.split(",");
-    const post = await Post.create({
-        title,
-        message,
-        creator,
-        image,
-        tags: tagsArray
-    });
+    const data = { ...body, tags: tagsArray };
+    const post = await Post.create(data);
     return post;
 });
 
 /**
- * update a record in the Post model.
+ * update a record with the specified ID does not exist in the post model.
  * @async
- * @param {object} data - An object containing the data for the new record.
  * @param {String} id - The ID of the post.
+ * @param {object} data - An object containing the data for the new record.
  * @throws {Error} If there's an issue creating the post.
  * @returns {Promise<Document>} A Promise that resolves to the document representing the new post record.
  */
 
-const update = asynchandler(async (id, data) => {
-    return await Post.findByIdAndUpdate(id, data, { new: true });
+const updatePostById = asynchandler(async (id, data) => {
+    const { tags } = data;
+    if (tags) {
+        const tagsArray = tags.split(",");
+        data = { ...data, tags: tagsArray };
+    }
+    const post = await Post.findByIdAndUpdate(id, data, { new: true });
+    return post;
 });
 
-export { create, update };
+export { createPost, updatePostById };

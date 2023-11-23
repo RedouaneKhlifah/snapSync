@@ -1,4 +1,4 @@
-import Header from "../Components/Header";
+import Header from "../Components/Header/Header";
 import Post from "../Components/Post";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -9,11 +9,14 @@ import {
     LikePost,
     DeletePost
 } from "../services/redux/actions/PostActions";
-import Form from "../Components/Form";
+import Form from "../Components/Form/Form";
 import { convertImageToBase64, emptyFileInpute } from "../utils/HelpesFunc";
 
 function Posts() {
     const posts = useSelector((state) => state.PostsReducer.posts);
+    const errorMessage = useSelector(
+        (state) => state.PostsReducer.errorMessage
+    );
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -28,23 +31,28 @@ function Posts() {
         tags: ""
     });
 
-    async function handelChange(e) {
+    async function handleChange(e) {
+        e.preventDefault();
         const { name, value, files } = e.target;
 
-        const inputeValue =
-            name === "image"
-                ? (await convertImageToBase64(files[0])) || ""
-                : value;
-        setForm((prev) => ({
-            ...prev,
-            [name]: inputeValue
-        }));
+        try {
+            const inputeValue =
+                name === "image"
+                    ? (await convertImageToBase64(files[0])) || ""
+                    : value;
+            setForm((prev) => ({
+                ...prev,
+                [name]: inputeValue
+            }));
+        } catch {
+            console.log("error");
+        }
     }
 
     const [SelectedPostId, SetselectedPostId] = useState(null);
     const [FormType, SetFormType] = useState("create");
 
-    function handelFormType({ title, message, creator, tags, image, id }) {
+    function handleFormType({ title, message, creator, tags, image, id }) {
         SetselectedPostId(id);
         SetFormType("update");
         setForm({
@@ -56,19 +64,27 @@ function Posts() {
         });
     }
 
-    function handleSubmit() {
-        dispatch(CreatePost(form));
-        setForm({
-            title: "",
-            image: "",
-            creator: "",
-            message: "",
-            tags: ""
-        });
-        emptyFileInpute("imageInput");
+    function handleSubmit(e) {
+        dispatch(CreatePost(form))
+        
+            .then(() => {
+                setForm({
+                    title: "",
+                    image: "",
+                    creator: "",
+                    message: "",
+                    tags: ""
+                });
+                emptyFileInpute("imageInput");
+                console.log("dispatch resolved");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
-    function Update() {
+    function handleUpdate(e) {
+        e.preventDefault();
         dispatch(UpdatePost(form, SelectedPostId));
         setForm({
             title: "",
@@ -100,13 +116,15 @@ function Posts() {
     function handleDelete(postId) {
         dispatch(DeletePost(postId));
     }
+
+    console.log(errorMessage);
     return (
-        <div className=" m-4">
+        <div className=" m-4" alt="Home">
             <Header />
             <div className=" grid xl:grid-cols-[60%_40%] lg:grid-cols-[60%_40%]  m-6 ">
                 <div className="w-12/12">
                     <div className=" grid  xl:grid-cols-2 lg:grid-cols-2  md:grid-cols-3 sm:grid-cols-2  gap-4 ">
-                        {posts.map((post, index) => {
+                        {posts?.map((post, index) => {
                             return (
                                 <Post
                                     key={index}
@@ -118,7 +136,7 @@ function Posts() {
                                     message={post.message}
                                     likeNumber={post.like}
                                     tags={post.tags}
-                                    updatefunc={handelFormType}
+                                    updatefunc={handleFormType}
                                     like={likePost}
                                     handleDelete={handleDelete}
                                 />
@@ -130,9 +148,9 @@ function Posts() {
                 <div className=" w-full flex justify-center">
                     <Form
                         type={FormType}
-                        handelChange={handelChange}
+                        handleChange={handleChange}
                         handleSubmit={
-                            FormType === "create" ? handleSubmit : Update
+                            FormType === "create" ? handleSubmit : handleUpdate
                         }
                         formData={form}
                         ClearForm={ClearForm}

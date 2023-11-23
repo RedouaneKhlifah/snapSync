@@ -4,7 +4,6 @@ function Button({ name, bgColor, onSubmit }) {
     return (
         <button
             className={`${bgColor} w-full text-white rounded-md py-[4px]   `}
-            type="submit"
             name={name}
             onClick={onSubmit}
         >

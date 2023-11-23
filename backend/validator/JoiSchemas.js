@@ -7,15 +7,16 @@ import Joi from "joi";
  *
  **/
 const customErrorMessages = {
-    "string.base": "The {#label} field must be a valid string.",
-    "string.pattern.base": "Password cannot contain spaces",
+    "string.base": "The {#label} field must be a valid string,{#label}",
+    "string.pattern.base": "Password cannot conStain spaces,{#label}",
     "string.min":
-        "The {#label} field must be at least {#limit} characters long.",
-    "string.max": "The {#label} field must not exceed {#limit} characters.",
-    "string.email": "The email address is not valid.",
-    "any.required": "The {#label} field is required.",
-    "string.empty": "the {#label} Field cannot be empty",
-    "number.base": "The {#label} field must be a valid id."
+        "The {#label} field must be at least {#limit} characters long,{#label}",
+    "string.max":
+        "The {#label} field must not exceed {#limit} characters.,{#label}",
+    "string.email": "The email address is not valid.,{#label}",
+    "any.required": "The {#label} field is required.,{#label}",
+    "string.empty": "the {#label} Field cannot be empty,{#label}",
+    "number.base": "The {#label} field must be a valid id.,{#label}"
 };
 
 /**

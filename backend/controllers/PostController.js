@@ -1,5 +1,5 @@
 import asynchandler from "express-async-handler";
-import { create, update } from "../services/post.js";
+import { createPost, updatePostById } from "../services/post.js";
 import { validator, PostSchema } from "../validator/JoiSchemas.js";
 import { CheckRecord } from "../services/helpers/helpers.js";
 import Post from "../models/PostModel.js";
@@ -24,9 +24,8 @@ const getAllPosts = asynchandler(async (req, res) => {
  * @returns {Promise<Document>} A Promise that resolves to an array of documents representing all posts.
  */
 const CreatePost = asynchandler(async (req, res) => {
-    const body = req.body;
-    validator(PostSchema, body);
-    const post = await create(body);
+    validator(PostSchema, req.body);
+    const post = await createPost(req.body);
     res.status(201).json(post);
 });
 
@@ -39,15 +38,9 @@ const CreatePost = asynchandler(async (req, res) => {
  */
 const UpadetPost = asynchandler(async (req, res) => {
     validator(PostSchema, req.body);
-
-    const { tags } = req.body;
-    const tagsArray = tags.split(",");
-
-    const body = { ...req.body, tags: tagsArray };
     const { id } = req.params;
-
     await CheckRecord(Post, id);
-    const post = await update(id, body);
+    const post = await updatePostById(id, req.body);
     res.status(200).json(post);
 });
 
@@ -62,7 +55,6 @@ const UpadetPost = asynchandler(async (req, res) => {
 const DeletePost = asynchandler(async (req, res) => {
     const { id } = req.params;
     await CheckRecord(Post, id);
-    console.log(id);
     const post = await Post.findByIdAndDelete(id);
     res.status(200).json(post);
 });
@@ -77,7 +69,7 @@ const DeletePost = asynchandler(async (req, res) => {
 const LikePost = asynchandler(async (req, res) => {
     const { id } = req.params;
     const data = { $inc: { like: 1 } };
-    const post = await update(id, data);
+    const post = await updatePostById(id, data);
     res.status(200).json(post);
 });
 

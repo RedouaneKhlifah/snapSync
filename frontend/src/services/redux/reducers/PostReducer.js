@@ -1,13 +1,18 @@
 import { actionTypes } from "../types/action-Types";
 
-const intialState = {
-    posts: []
+const initialState = {
+    posts: [],
+    newPost: null,
+    updatedPost: null,
+    likePost: null,
+    deletePost: null,
+    errorMessage: null
 };
-const PostsReducer = (state = intialState, { type, payload }) => {
+
+const PostsReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case actionTypes.FETCH_POSTS:
             return { ...state, posts: payload };
-
         case actionTypes.CREATE_POST:
             return { ...state, newPost: payload };
         case actionTypes.UPDATE_POST:
@@ -16,6 +21,8 @@ const PostsReducer = (state = intialState, { type, payload }) => {
             return { ...state, likePost: payload };
         case actionTypes.DELETE_POST:
             return { ...state, deletePost: payload };
+        case actionTypes.ERROR:
+            return { ...state, errorMessage: payload };
         default:
             return state;
     }
